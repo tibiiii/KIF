@@ -19,6 +19,7 @@
 		3ADD25CC71BF27D675768787 /* UIView-Debugging.h in Headers */ = {isa = PBXBuildFile; fileRef = 3ADD26484C6C438B71DC15C5 /* UIView-Debugging.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4A48107B19708CAB0003A32E /* ExistTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A48107A19708CAB0003A32E /* ExistTests.m */; };
 		4D2FD4EE1AF5936700E61192 /* UIView-Debugging.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADD2160096BE41C780FBD95 /* UIView-Debugging.m */; };
+		4D83468C21163AF400B90A58 /* PencilTappingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D83468B21163AF400B90A58 /* PencilTappingTests.m */; };
 		5A62B0AC1BB2043B00A3F480 /* AccessibilityIdentifierPullToRefreshTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A62B0AB1BB2043B00A3F480 /* AccessibilityIdentifierPullToRefreshTests.m */; };
 		5A62B0AE1BB205CA00A3F480 /* PullToRefreshTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A62B0AD1BB205CA00A3F480 /* PullToRefreshTests.m */; };
 		5C877DD01B057E13006A3AC6 /* KIFUITestActor-IdentifierTests.h in Headers */ = {isa = PBXBuildFile; fileRef = EB1A44D31A0C3268004A3F61 /* KIFUITestActor-IdentifierTests.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -293,6 +294,7 @@
 		3ADD2160096BE41C780FBD95 /* UIView-Debugging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView-Debugging.m"; sourceTree = "<group>"; };
 		3ADD26484C6C438B71DC15C5 /* UIView-Debugging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView-Debugging.h"; sourceTree = "<group>"; };
 		4A48107A19708CAB0003A32E /* ExistTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExistTests.m; sourceTree = "<group>"; };
+		4D83468B21163AF400B90A58 /* PencilTappingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PencilTappingTests.m; sourceTree = "<group>"; };
 		5A62B0AB1BB2043B00A3F480 /* AccessibilityIdentifierPullToRefreshTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessibilityIdentifierPullToRefreshTests.m; sourceTree = "<group>"; };
 		5A62B0AD1BB205CA00A3F480 /* PullToRefreshTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PullToRefreshTests.m; sourceTree = "<group>"; };
 		5F6A1B371C191F9600F20F22 /* UIApplicationKIFAdditionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIApplicationKIFAdditionsTests.m; sourceTree = "<group>"; };
@@ -787,6 +789,7 @@
 				EB60ED08177F90BA005A041A /* ModalViewTests.m */,
 				EB60ED09177F90BA005A041A /* SpecificControlTests.m */,
 				EB60ED0B177F90BA005A041A /* TappingTests.m */,
+				4D83468B21163AF400B90A58 /* PencilTappingTests.m */,
 				EB3F654417AA0B8400469D18 /* TableViewTests.m */,
 				EA0F2546182979BE006FF825 /* CollectionViewTests.m */,
 				D9EA274018F05A6000D87E57 /* ScrollViewTests.m */,
@@ -1301,6 +1304,7 @@
 				4A48107B19708CAB0003A32E /* ExistTests.m in Sources */,
 				EA4655881905B92500B2C60E /* PickerTests.m in Sources */,
 				3812FB631A12188700335733 /* WaitForAnimationTests.m in Sources */,
+				4D83468C21163AF400B90A58 /* PencilTappingTests.m in Sources */,
 				FA49155A1A781E6800A78E57 /* MultiFingerTests_ViewTestActor.m in Sources */,
 				5F6A1B381C191F9600F20F22 /* UIApplicationKIFAdditionsTests.m in Sources */,
 				EB1A44DA1A0C33AD004A3F61 /* AccessibilityIdentifierTests.m in Sources */,

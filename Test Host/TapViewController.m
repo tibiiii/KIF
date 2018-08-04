@@ -17,6 +17,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *greetingTextField;
 @property (weak, nonatomic) IBOutlet UIStepper *stepper;
 @property (weak, nonatomic) IBOutlet UILabel *stepperValueLabel;
+@property (weak, nonatomic) IBOutlet UILabel *labelWithPencilTapGestureRecognizer;
+@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *pencilTapGestureRecognizer;
+
 @end
 
 @implementation TapViewController
@@ -28,6 +31,12 @@
     self.lineBreakLabel.accessibilityLabel = @"A\nB\nC\n\n";
 	self.stepper.isAccessibilityElement = YES;
 	self.stepper.accessibilityLabel = @"theStepper";
+
+    self.labelWithPencilTapGestureRecognizer.userInteractionEnabled = YES;
+    self.labelWithPencilTapGestureRecognizer.accessibilityIdentifier = @"labelWithPencilTap";
+    self.pencilTapGestureRecognizer.requiresExclusiveTouchType = YES;
+    self.pencilTapGestureRecognizer.allowedTouchTypes = @[[NSNumber numberWithLong:UITouchTypeStylus]];
+    [self.pencilTapGestureRecognizer addTarget:self action:@selector(pencilTapGestureRecognizerChanged:)];
 }
 
 - (void)memoryWarningNotification:(NSNotification *)notification
@@ -98,6 +107,12 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     self.selectedPhotoClass.text = NSStringFromClass([info[UIImagePickerControllerOriginalImage] class]);
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Pencil UITapGestureRecognizer
+
+- (IBAction)pencilTapGestureRecognizerChanged:(id)sender {
+    self.labelWithPencilTapGestureRecognizer.text = @"Pencil Tap";
 }
 
 @end

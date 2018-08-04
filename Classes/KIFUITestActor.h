@@ -321,6 +321,7 @@ typedef NS_ENUM(NSUInteger, KIFPullToRefreshTiming) {
  @param screenPoint The point in screen coordinates to tap. Screen points originate from the top left of the screen.
  */
 - (void)tapScreenAtPoint:(CGPoint)screenPoint;
+- (void)pencilTapScreenAtPoint:(CGPoint)screenPoint;
 
 /*!
  @abstract Performs a long press on a particular view in the view hierarchy.

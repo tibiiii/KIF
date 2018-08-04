@@ -37,6 +37,8 @@ typedef struct {
 
 - (void)_setHidEvent:(IOHIDEventRef)event;
 
+- (void)_setType:(UITouchType)type;
+
 @end
 
 @implementation UITouch (KIFAdditions)
@@ -108,6 +110,10 @@ typedef struct {
     IOHIDEventRef event = kif_IOHIDEventWithTouches(@[self]);
     [self _setHidEvent:event];
     CFRelease(event);
+}
+
+- (void)setType:(UITouchType)type {
+    [self _setType:type];
 }
 
 @end

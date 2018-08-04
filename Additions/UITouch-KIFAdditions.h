@@ -18,4 +18,6 @@
 - (void)setLocationInWindow:(CGPoint)location;
 - (void)setPhaseAndUpdateTimestamp:(UITouchPhase)phase;
 
+- (void)setType:(UITouchType)type;
+
 @end

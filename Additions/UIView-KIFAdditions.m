@@ -1007,5 +1007,48 @@ NS_INLINE BOOL StringsMatchExceptLineBreaks(NSString *expected, NSString *actual
     }
 }
 
+- (void)pencilTap
+{
+    CGPoint centerPoint = CGPointMake(self.frame.size.width * 0.5f, self.frame.size.height * 0.5f);
+
+    [self pencilTapAtPoint:centerPoint];
+}
+
+- (void)pencilTapAtPoint:(CGPoint)point
+{
+    // Web views don't handle touches in a normal fashion, but they do have a method we can call to tap them
+    // This may not be necessary anymore. We didn't properly support controls that used gesture recognizers
+    // when this was added, but we now do. It needs to be tested before we can get rid of it.
+    id /*UIWebBrowserView*/ webBrowserView = nil;
+
+    if ([NSStringFromClass([self class]) isEqual:@"UIWebBrowserView"]) {
+        webBrowserView = self;
+    } else if ([self isKindOfClass:[UIWebView class]]) {
+        id webViewInternal = [self valueForKey:@"_internal"];
+        webBrowserView = [webViewInternal valueForKey:@"browserView"];
+    }
+
+    if (webBrowserView) {
+        [webBrowserView tapInteractionWithLocation:point];
+        return;
+    }
+
+    // Handle touches in the normal way for other views
+    UITouch *touch = [[UITouch alloc] initAtPoint:point inView:self];
+    [touch setType:UITouchTypeStylus];
+    [touch setPhaseAndUpdateTimestamp:UITouchPhaseBegan];
+
+    UIEvent *event = [self eventWithTouch:touch];
+
+    [[UIApplication sharedApplication] sendEvent:event];
+
+    [touch setPhaseAndUpdateTimestamp:UITouchPhaseEnded];
+    [[UIApplication sharedApplication] sendEvent:event];
+
+    // Dispatching the event doesn't actually update the first responder, so fake it
+    if ([touch.view isDescendantOfView:self] && [self canBecomeFirstResponder]) {
+        [self becomeFirstResponder];
+    }
+}
 
 @end

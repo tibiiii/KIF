@@ -116,6 +116,11 @@ typedef CGPoint KIFDisplacement;
  */
 - (void)performBlockOnAscendentViews:(void (^)(UIView *view, BOOL *stop))block;
 
+
+#pragma mark - Pencil interactions
+- (void)pencilTap;
+- (void)pencilTapAtPoint:(CGPoint)point;
+
 /*!
  @abstract Returns either the current window or another window if a transform is applied.  Returns `nil` if all windows in the application have transforms.
  */

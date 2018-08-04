@@ -346,7 +346,17 @@ static BOOL KIFUITestActorAnimationsEnabled = YES;
     [self waitForAnimationsToFinish];
 }
 
+- (void)pencilTapScreenAtPoint:(CGPoint)screenPoint
+{
+    [self tapScreenAtPoint:screenPoint withPencil:YES];
+}
+
 - (void)tapScreenAtPoint:(CGPoint)screenPoint
+{
+    [self tapScreenAtPoint:screenPoint withPencil:NO];
+}
+
+- (void)tapScreenAtPoint:(CGPoint)screenPoint withPencil:(BOOL)withPencil
 {
     [self runBlock:^KIFTestStepResult(NSError **error) {
         
@@ -366,7 +376,11 @@ static BOOL KIFUITestActorAnimationsEnabled = YES;
         
         // This is mostly redundant of the test in _accessibilityElementWithLabel:
         CGPoint viewPoint = [view convertPoint:screenPoint fromView:nil];
-        [view tapAtPoint:viewPoint];
+        if (withPencil) {
+            [view pencilTapAtPoint:viewPoint];
+        } else {
+            [view tapAtPoint:viewPoint];
+        }
         
         return KIFTestStepResultSuccess;
     }];

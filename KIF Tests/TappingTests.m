@@ -113,4 +113,16 @@
 	}
 }
 
+- (void) testPencilTap
+{
+    UILabel *label = (UILabel *)[tester waitForViewWithAccessibilityIdentifier:@"labelWithPencilTap"];
+    NSString *originalText = label.text;
+    [label tap];
+    XCTAssertEqual(label.text, originalText);
+
+    [label pencilTap];
+    [tester waitForTimeInterval:0.5f];
+    XCTAssertNotEqual(label.text, originalText);
+}
+
 @end
