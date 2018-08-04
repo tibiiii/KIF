@@ -557,7 +557,7 @@ NS_INLINE BOOL StringsMatchExceptLineBreaks(NSString *expected, NSString *actual
 {
     CGPoint endPoint = CGPointMake(startPoint.x + displacement.x, startPoint.y + displacement.y);
     NSArray *path = [self pointsFromStartPoint:startPoint toPoint:endPoint steps:stepCount];
-    [self dragPointsAlongPaths:@[path]];
+    [self dragPointsAlongPaths:@[path] withPencil:NO];
 }
 
 - (void)dragAlongPathWithPoints:(CGPoint *)points count:(NSInteger)count;
@@ -568,10 +568,10 @@ NS_INLINE BOOL StringsMatchExceptLineBreaks(NSString *expected, NSString *actual
     {
         [array addObject:[NSValue valueWithCGPoint:points[i]]];
     }
-    [self dragPointsAlongPaths:@[[array copy]]];
+    [self dragPointsAlongPaths:@[[array copy]] withPencil:NO];
 }
 
-- (void)dragPointsAlongPaths:(NSArray *)arrayOfPaths {
+- (void)dragPointsAlongPaths:(NSArray *)arrayOfPaths withPencil:(BOOL)withPencil {
     // must have at least one path, and each path must have the same number of points
     if (arrayOfPaths.count == 0)
     {
@@ -615,6 +615,9 @@ NS_INLINE BOOL StringsMatchExceptLineBreaks(NSString *expected, NSString *actual
                 // The starting point needs to be relative to the view receiving the UITouch event.
                 point = [self convertPoint:point fromView:self.window];
                 UITouch *touch = [[UITouch alloc] initAtPoint:point inView:self];
+                if (withPencil) {
+                    [touch setType:UITouchTypeStylus];
+                }
                 [touch setPhaseAndUpdateTimestamp:UITouchPhaseBegan];
                 [touches addObject:touch];
             }
@@ -631,6 +634,9 @@ NS_INLINE BOOL StringsMatchExceptLineBreaks(NSString *expected, NSString *actual
                 NSArray *path = arrayOfPaths[pathIndex];
                 CGPoint point = [path[pointIndex] CGPointValue];
                 touch = touches[pathIndex];
+                if (withPencil) {
+                    [touch setType:UITouchTypeStylus];
+                }
                 [touch setLocationInWindow:point];
                 [touch setPhaseAndUpdateTimestamp:UITouchPhaseMoved];
             }
@@ -645,7 +651,6 @@ NS_INLINE BOOL StringsMatchExceptLineBreaks(NSString *expected, NSString *actual
                     [touch setPhaseAndUpdateTimestamp:UITouchPhaseEnded];
                     UIEvent *eventUp = [self eventWithTouch:touch];
                     [[UIApplication sharedApplication] sendEvent:eventUp];
-                    
                 }
 
             }
@@ -677,7 +682,7 @@ NS_INLINE BOOL StringsMatchExceptLineBreaks(NSString *expected, NSString *actual
     NSArray *finger2Path = [self pointsFromStartPoint:finger2Start toPoint:finger2End steps:stepCount];
     NSArray *paths = @[finger1Path, finger2Path];
 
-    [self dragPointsAlongPaths:paths];
+    [self dragPointsAlongPaths:paths withPencil:NO];
 }
 
 - (void)pinchAtPoint:(CGPoint)centerPoint distance:(CGFloat)distance steps:(NSUInteger)stepCount {
@@ -691,7 +696,7 @@ NS_INLINE BOOL StringsMatchExceptLineBreaks(NSString *expected, NSString *actual
     NSArray *finger2Path = [self pointsFromStartPoint:finger2Start toPoint:finger2End steps:stepCount];
     NSArray *paths = @[finger1Path, finger2Path];
 
-    [self dragPointsAlongPaths:paths];
+    [self dragPointsAlongPaths:paths withPencil:NO];
 }
 
 - (void)zoomAtPoint:(CGPoint)centerPoint distance:(CGFloat)distance steps:(NSUInteger)stepCount {
@@ -705,7 +710,7 @@ NS_INLINE BOOL StringsMatchExceptLineBreaks(NSString *expected, NSString *actual
     NSArray *finger2Path = [self pointsFromStartPoint:finger2Start toPoint:finger2End steps:stepCount];
     NSArray *paths = @[finger1Path, finger2Path];
 
-    [self dragPointsAlongPaths:paths];
+    [self dragPointsAlongPaths:paths withPencil:NO];
 }
 
 - (void)twoFingerRotateAtPoint:(CGPoint)centerPoint angle:(CGFloat)angleInDegrees {
@@ -734,7 +739,7 @@ NS_INLINE BOOL StringsMatchExceptLineBreaks(NSString *expected, NSString *actual
         [finger1Path addObject:[NSValue valueWithCGPoint:finger1]];
         [finger2Path addObject:[NSValue valueWithCGPoint:finger2]];
     }
-    [self dragPointsAlongPaths:@[[finger1Path copy], [finger2Path copy]]];
+    [self dragPointsAlongPaths:@[[finger1Path copy], [finger2Path copy]] withPencil:NO];
 }
 
 - (NSArray *)pointsFromStartPoint:(CGPoint)startPoint toPoint:(CGPoint)toPoint steps:(NSUInteger)stepCount {
@@ -1049,6 +1054,36 @@ NS_INLINE BOOL StringsMatchExceptLineBreaks(NSString *expected, NSString *actual
     if ([touch.view isDescendantOfView:self] && [self canBecomeFirstResponder]) {
         [self becomeFirstResponder];
     }
+}
+
+- (void)pencilDragFromPoint:(CGPoint)startPoint toPoint:(CGPoint)endPoint
+{
+    [self pencilDragFromPoint:startPoint toPoint:endPoint steps:3];
+}
+
+- (void)pencilDragFromPoint:(CGPoint)startPoint toPoint:(CGPoint)endPoint steps:(NSUInteger)stepCount
+{
+    KIFDisplacement displacement = CGPointMake(endPoint.x - startPoint.x, endPoint.y - startPoint.y);
+    [self pencilDragFromPoint:startPoint displacement:displacement steps:stepCount];
+
+}
+
+- (void)pencilDragFromPoint:(CGPoint)startPoint displacement:(KIFDisplacement)displacement steps:(NSUInteger)stepCount
+{
+    CGPoint endPoint = CGPointMake(startPoint.x + displacement.x, startPoint.y + displacement.y);
+    NSArray *path = [self pointsFromStartPoint:startPoint toPoint:endPoint steps:stepCount];
+    [self dragPointsAlongPaths:@[path] withPencil:YES];
+}
+
+- (void)pencilDragAlongPathWithPoints:(CGPoint *)points count:(NSInteger)count
+{
+    // convert point array into NSArray with NSValue
+    NSMutableArray *array = [NSMutableArray array];
+    for (int i = 0; i < count; i++)
+    {
+        [array addObject:[NSValue valueWithCGPoint:points[i]]];
+    }
+    [self dragPointsAlongPaths:@[[array copy]] withPencil:YES];
 }
 
 @end

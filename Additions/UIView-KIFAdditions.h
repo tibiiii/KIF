@@ -120,6 +120,10 @@ typedef CGPoint KIFDisplacement;
 #pragma mark - Pencil interactions
 - (void)pencilTap;
 - (void)pencilTapAtPoint:(CGPoint)point;
+- (void)pencilDragFromPoint:(CGPoint)startPoint toPoint:(CGPoint)endPoint;
+- (void)pencilDragFromPoint:(CGPoint)startPoint toPoint:(CGPoint)endPoint steps:(NSUInteger)stepCount;
+- (void)pencilDragFromPoint:(CGPoint)startPoint displacement:(KIFDisplacement)displacement steps:(NSUInteger)stepCount;
+- (void)pencilDragAlongPathWithPoints:(CGPoint *)points count:(NSInteger)count;
 
 /*!
  @abstract Returns either the current window or another window if a transform is applied.  Returns `nil` if all windows in the application have transforms.
